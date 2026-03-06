@@ -5,25 +5,25 @@ import { getAllActivities } from '../db/indexedDB';
 import { calculateStreak } from '../utils/streakCalculator';
 import dayjs from 'dayjs';
 
-function HeatmapContainer() {
+function HeatmapContainer({ refresh }) {
   const [activityMap, setActivityMap] = useState({});
   const [streak, setStreak] = useState(0);
 
-  useEffect(() => {
-    async function loadActivity() {
-      const activities = await getAllActivities();
-      console.log("IndexedDB data:", activities);
-      const map = {};
-      activities.forEach((item) => {
-        map[item.date] = item;
-      });
-        
-      setActivityMap(map);
-      setStreak(calculateStreak(map));
-    }
+  const loadActivity = async () => {
+    const activities = await getAllActivities();
 
+    const map = {};
+    activities.forEach((item) => {
+      map[item.date] = item;
+    });
+
+    setActivityMap(map);
+    setStreak(calculateStreak(map));
+  };
+
+  useEffect(() => {
     loadActivity();
-  }, []);
+  }, [refresh]); // 🔥 reload when puzzle solved
 
   const startOfYear = dayjs().startOf('year');
   const days = [];
@@ -34,7 +34,6 @@ function HeatmapContainer() {
 
   return (
     <div>
-      {' '}
       <h2>Activity Heatmap</h2>
       <StreakCounter streak={streak} />
       <HeatmapGrid days={days} activity={activityMap} />
