@@ -11,6 +11,7 @@ function Home() {
   const [puzzle, setPuzzle] = useState(null);
   const [score, setScore] = useState(0);
   const [solved, setSolved] = useState(0);
+  const [refreshHeatmap, setRefreshHeatmap] = useState(false);
 
   useEffect(() => {
     setPuzzle(generatePuzzle());
@@ -22,7 +23,9 @@ function Home() {
 
     setScore(newScore);
     setSolved(newSolved);
+
     console.log("Puzzle solved");
+
     const today = new Date().toISOString().split('T')[0];
 
     await saveActivity({
@@ -33,6 +36,9 @@ function Home() {
       difficulty: 1,
       synced: false
     });
+
+    // 🔥 trigger heatmap refresh
+    setRefreshHeatmap(prev => !prev);
 
     // Batch sync every 5 puzzles
     if (newSolved % 5 === 0) {
@@ -46,18 +52,22 @@ function Home() {
 
   return (
     <div>
-      {' '}
-      <h1>Daily Logic Puzzle</h1>{' '}
+      <h1>Daily Logic Puzzle</h1>
       <p>Solve today's puzzle and keep your streak alive 🔥</p>
+
       <ScoreBoard score={score} solved={solved} />
+
       {puzzle && (
         <>
           <PuzzleCard question={puzzle.question} />
           <PuzzleInput answer={puzzle.answer} onSolved={handleSolved} />
         </>
       )}
+
       <button onClick={nextPuzzle}>Next Puzzle</button>
-      <HeatmapContainer />
+
+      {/* pass refresh trigger */}
+      <HeatmapContainer refresh={refreshHeatmap} />
     </div>
   );
 }
