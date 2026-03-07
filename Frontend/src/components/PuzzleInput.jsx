@@ -1,30 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
-function PuzzleInput({ answer, onSolved }) {
-  const [input, setInput] = useState('');
-  const [result, setResult] = useState('');
+function PuzzleInput({ answer, onSolved, disabled, timeUp }) {
+  const [input, setInput] = useState("");
+  const [result, setResult] = useState("");
+  const inputRef = useRef(null);
 
-  const checkAnswer = () => {
+  // 🔹 Auto focus input when puzzle loads
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [answer]);
+
+  // 🔹 Show time up message
+  useEffect(() => {
+    if (timeUp) {
+      setResult(`⏰ Time's Up! Try Again Tomorrow. Correct Answer: ${answer}`);
+    }
+  }, [timeUp, answer]);
+
+  const checkAnswer = (e) => {
+    e.preventDefault();
+
+    if (disabled || timeUp) return;
+
     if (Number(input) === answer) {
-      setResult('✅ Correct!');
+      setResult("✅ Correct!");
+      setInput("");
       onSolved();
     } else {
-      setResult('❌ Try again');
+      setResult("❌ Try Again");
     }
   };
 
   return (
     <div className="puzzle-input">
-      <input
-        type="number"
-        placeholder="Enter answer"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
+      <form onSubmit={checkAnswer}>
+        <input
+          ref={inputRef}
+          type="number"
+          placeholder="Enter answer"
+          value={input}
+          disabled={disabled || timeUp}
+          onChange={(e) => setInput(e.target.value)}
+        />
 
-      <button onClick={checkAnswer}>Submit</button>
+        <button type="submit" disabled={disabled || timeUp}>
+          Submit
+        </button>
+      </form>
 
-      <p>{result}</p>
+      {result && (
+        <p style={{ marginTop: "8px", fontWeight: "bold" }}>
+          {result}
+        </p>
+      )}
     </div>
   );
 }
