@@ -209,6 +209,7 @@ This project follows a **client-first architecture** where most logic runs local
             Demo
             [animated gif of solving puzzle]
 
+
 ### Key Principles
 
 * **Client-first design**
@@ -221,3 +222,5 @@ This project follows a **client-first architecture** where most logic runs local
 Syed Shahid Ahamed
 
 Bluestock Internship – Capstone Project
+
+![Image](https://github.com/user-attachments/assets/da6feefd-42d6-4b99-a7c1-5d77fd3d3e90)
