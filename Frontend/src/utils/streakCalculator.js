@@ -1,15 +1,20 @@
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 
 export function calculateStreak(activityMap) {
-  let streak = 0;
-  let current = dayjs();
+  const dates = Object.keys(activityMap).sort(); // sort ascending
 
-  while (true) {
-    const date = current.format('YYYY-MM-DD');
+  if (dates.length === 0) return 0;
 
-    if (activityMap[date]?.solved) {
+  let streak = 1;
+
+  for (let i = dates.length - 1; i > 0; i--) {
+    const current = dayjs(dates[i]);
+    const previous = dayjs(dates[i - 1]);
+
+    const diff = current.diff(previous, "day");
+
+    if (diff === 1) {
       streak++;
-      current = current.subtract(1, 'day');
     } else {
       break;
     }
