@@ -1,55 +1,86 @@
 # 🧩 Daily Puzzle Logic Game
 
-A client-first **offline puzzle game** with a GitHub-style activity heatmap, built as a capstone project for the **Bluestock Internship**.
+![React](https://img.shields.io/badge/React-18-blue)
+![Vite](https://img.shields.io/badge/Vite-Build-purple)
+![Node](https://img.shields.io/badge/Node.js-Backend-green)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-Users solve logic puzzles, track daily progress, maintain streaks, and visualize activity using a contribution-style heatmap.
+A **client-first offline puzzle game** that challenges users with logic puzzles while tracking daily progress through a **GitHub-style contribution heatmap**.
+
+Built as a **Capstone Project for the Bluestock Internship**, the application emphasizes **offline-first architecture, performance, and efficient client-side computation**.
+
+---
+
+# 🎮 Demo
+
+![Image](https://github.com/user-attachments/assets/da6feefd-42d6-4b99-a7c1-5d77fd3d3e90)
+
+---
+
+# 🌐 Live Demo
+
+[https://daily-puzzle-game-alpha-rose.vercel.app/](https://daily-puzzle-game-alpha-rose.vercel.app/)
 
 ---
 
 # 🚀 Features
 
-### 🎮 Puzzle Gameplay
+## 🎮 Puzzle Gameplay
 
 * Random puzzle generation
 * Instant answer validation
 * Score tracking
 * Multiple puzzles per session
+* Lightweight client-side logic
 
-### 📊 Activity Heatmap
 
-* GitHub-style contribution grid
+## 📊 Activity Heatmap
+
+Inspired by GitHub contribution graphs.
+
 * Tracks daily puzzle completion
-* Color intensity based on performance
-* Works completely offline
+* Visual contribution grid
+* Color intensity based on activity
+* Fully functional offline
 
-### 🔥 Streak System
+
+## 🔥 Streak System
+
+Encourages consistent play.
 
 * Tracks consecutive puzzle-solving days
-* Encourages consistent play
+* Updates automatically based on activity
+* Stored locally for persistence
 
-### 📦 Offline First Architecture
+
+## 📦 Offline-First Architecture
+
+The game is designed to work **even without internet connectivity**.
 
 * Activity stored locally using **IndexedDB**
 * Data compressed with **LZ-String**
-* Syncs to server when internet is available
+* Automatic server sync when internet is available
+* Efficient batch syncing to minimize API calls
 
 ---
 
 # 🧠 Tech Stack
 
-Frontend
+## Frontend
 
 * React
 * Vite
 * IndexedDB
 * DayJS
 
-Backend
+
+## Backend
 
 * Node.js
 * Express
 
-Tools
+
+## Development Tools
 
 * ESLint
 * Prettier
@@ -58,8 +89,56 @@ Tools
 
 ---
 
+# 🏗 Architecture
+
+This project follows a **client-first architecture** where most logic runs locally to ensure **fast performance and offline functionality**.
+
+```
++----------------------+
+|      React App       |
+|  (Puzzle Interface)  |
++----------+-----------+
+           |
+           v
++----------------------+
+|   Puzzle Generator   |
+|   (Client-side)      |
++----------+-----------+
+           |
+           v
++----------------------+
+|     IndexedDB        |
+|  (Local Storage)     |
+|  dailyActivity store |
++----------+-----------+
+           |
+    Offline-first storage
+           |
+           v
++----------------------+
+|  Batch Sync Service  |
+|  (every 5 puzzles)   |
++----------+-----------+
+           |
+           v
++----------------------+
+|   Express Backend    |
+|  /sync/daily-scores  |
++----------------------+
+```
+
+### Key Principles
+
+* Client-first design
+* Offline functionality
+* Minimal backend writes
+* Efficient batch syncing
+
+---
+
 # 📁 Project Structure
 
+```
 src
 │
 ├── components
@@ -85,6 +164,7 @@ src
 │   └── puzzleGenerator.js
 │
 └── tests
+```
 
 ---
 
@@ -92,13 +172,19 @@ src
 
 Clone the repository
 
-```
+```bash
 git clone <repo-url>
+```
+
+Navigate to the project folder
+
+```bash
+cd daily-puzzle-game
 ```
 
 Install dependencies
 
-```
+```bash
 npm install
 ```
 
@@ -106,25 +192,27 @@ npm install
 
 # ▶️ Running the Project
 
-Start frontend
+## Start Frontend
 
-```
+```bash
 npm run dev
 ```
 
-Runs at
+Runs at:
 
 ```
 http://localhost:5173
 ```
 
-Start backend API
+---
 
-```
-node services/server.js
+## Start Backend API
+
+```bash
+node server.js
 ```
 
-Runs at
+Runs at:
 
 ```
 http://localhost:5000
@@ -134,19 +222,27 @@ http://localhost:5000
 
 # 🧪 Run Tests
 
-```
+```bash
 npm run test
 ```
+
+Testing includes:
+
+* Component testing
+* Puzzle logic validation
+* UI interaction tests
 
 ---
 
 # 📦 Production Build
 
-```
+Create optimized production build.
+
+```bash
 npm run build
 ```
 
-Output will be in
+Build output will be generated in:
 
 ```
 dist/
@@ -156,71 +252,33 @@ dist/
 
 # 📊 Performance
 
-| Metric                 | Result |
-| ---------------------- | ------ |
-| Initial Load           | <100KB |
-| Offline Support        | ✅      |
-| Heatmap Rendering      | <100ms |
-| Client-side Generation | <100ms |
+| Metric                 | Result    |
+| ---------------------- | --------- |
+| Initial Load           | <100KB    |
+| Puzzle Generation      | <100ms    |
+| Heatmap Rendering      | <100ms    |
+| Offline Support        | ✅         |
+| Client-side Processing | Optimized |
 
 ---
-# 🏗 Architecture
 
-This project follows a **client-first architecture** where most logic runs locally for performance and offline support.
+# 📸 Screenshots
 
+### Puzzle Interface
 
-          +----------------------+
-          |      React App       |
-          |  (Puzzle Interface)  |
-          +----------+-----------+
-                     |
-                     |
-                     v
-          +----------------------+
-          |   Puzzle Generator   |
-          |   (Client-side)      |
-          +----------+-----------+
-                     |
-                     |
-                     v
-          +----------------------+
-          |     IndexedDB        |
-          |  (Local Storage)     |
-          |  dailyActivity store |
-          +----------+-----------+
-                     |
-           Offline-first storage
-                     |
-                     v
-          +----------------------+
-          |  Batch Sync Service  |
-          |  (every 5 puzzles)   |
-          +----------+-----------+
-                     |
-                     |
-                     v
-          +----------------------+
-          |   Express Backend    |
-          |  /sync/daily-scores  |
-          +----------+-----------+
-                     
-            Daily Logic Puzzle Game
+<img width="1919" height="912" alt="Image" src="https://github.com/user-attachments/assets/fd9c8365-40b6-4d68-bed3-69357600762b" />
 
-            Demo
-            [animated gif of solving puzzle]
+### Activity Heatmap
 
+<img width="935" height="377" alt="Image" src="https://github.com/user-attachments/assets/5524924d-fee8-40a9-8447-2974a4236946" />
 
-### Key Principles
-
-* **Client-first design**
-* **Offline functionality**
-* **Minimal backend writes**
-* **Efficient batch syncing**
 ---
+
 # 👨‍💻 Author
 
-Syed Shahid Ahamed
+**Syed Shahid Ahamed**
 
 Bluestock Internship – Capstone Project
 
-![Image](https://github.com/user-attachments/assets/da6feefd-42d6-4b99-a7c1-5d77fd3d3e90)
+GitHub:
+[https://github.com/SyedShahidAhamed](https://github.com/SyedShahidAhamed)
